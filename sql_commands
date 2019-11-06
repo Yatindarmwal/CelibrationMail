@@ -38,7 +38,7 @@ ADD
 AFTER
   `user_id`;
 
-  
+
 CREATE TABLE `celibration_mail`.`subscription_list` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
@@ -46,3 +46,13 @@ CREATE TABLE `celibration_mail`.`subscription_list` (
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
+ALTER TABLE
+  `users`
+ADD
+  `timezone` INT NOT NULL
+AFTER
+  `email`;
+
+
+ALTER TABLE users
+ADD CONSTRAINT email UNIQUE (email);

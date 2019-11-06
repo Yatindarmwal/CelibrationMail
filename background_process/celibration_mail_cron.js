@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require('../database');
+const db = require('../services/database');
 let dummy_db = [];  //fake dummy Database
 let mails_to_send = [];  //mail queue
 
@@ -126,8 +126,3 @@ function isSpecialMomentValid(date) {
 }
 
 // isSpecialMomentValid(dummy_db[0]);
-
-db.query('Select * from users', (err, res) => {
-    if (err) throw err;
-    console.log('Last insert ID:', res);
-});
