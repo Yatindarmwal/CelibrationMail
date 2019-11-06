@@ -1,0 +1,48 @@
+CREATE TABLE `celibration_mail`.`events` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NOT NULL,
+  `recuring_date` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE `celibration_mail`.`blacklist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `blacklisted_email` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
+
+ALTER TABLE
+  `users`
+ADD
+  `password` VARCHAR(2000) NOT NULL
+AFTER
+  `email`;
+
+
+ALTER TABLE
+  `events`
+ADD
+  `last_wished_on` INT NOT NULL
+AFTER
+  `user_id`;
+
+  
+CREATE TABLE `celibration_mail`.`subscription_list` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `suscribed_email` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+

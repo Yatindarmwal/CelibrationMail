@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const db = require('./database');
 const celibration_mail_cron = require('./background_process/celibration_mail_cron');
 const app = express();
 const port = 3001;
