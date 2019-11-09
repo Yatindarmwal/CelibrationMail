@@ -8,4 +8,10 @@ router.get('/', function (req, res) {
 });
 
 
+
+router.get('/neha', function (req, res) {
+    res.status(200).send('neha is beautifull');
+});
+
+
 module.exports = router

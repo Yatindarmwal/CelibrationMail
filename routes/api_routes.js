@@ -8,7 +8,7 @@ router.get('/api', function (req, res) {
     res.status(200).send('celibration mail api');
 });
 
-router.post('/api/register_user', async function (req, res) {
+router.post('/api/register_user', async (req, res) => {
     let user = {
         name: req.query.name,
         email: req.query.email,
@@ -16,15 +16,87 @@ router.post('/api/register_user', async function (req, res) {
         password: req.query.password
     }
     try {
-        let user_added = await api_functions.addUser(user);
+        await api_functions.addUser(user);
+        res.status(200).send('Congrats Account created please login');
     } catch (error) {
         console.log('error' + error);
         res.status(400).send('Failed' + error);
         return;
     }
-    res.status(200).send('Congrats Account created please login');
 });
 
+router.get('/api/login', async (req, res) => {
+    let user = {
+        email: req.query.email,
+        password: req.query.password
+    }
+    try {
+        let authorized = await api_functions.validate_user(user);
+        if (authorized)
+            res.status(200).send('Welcome');
+        else
+            res.status(401).send('Un Authorized');
+    } catch (error) {
+        console.log('error' + error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+});
 
+router.get('/api/get_event_list', async (req, res) => {
+    let user = {
+        email: req.query.email
+    }
+    try {
+        let event_list = await api_functions.getEventList(user);
+        res.status(200).send(event_list);
+    } catch (error) {
+        console.log('error' + error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+});
+
+router.get('/api/get_black_list', async (req, res) => {
+    let user = {
+        email: req.query.email
+    }
+    try {
+        let suscribtion_list = await api_functions.getBlackList(user);
+        res.status(200).send(suscribtion_list);
+    } catch (error) {
+        console.log('error' + error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+});
+
+router.get('/api/get_subscription_list', async (req, res) => {
+    let user = {
+        email: req.query.email
+    }
+    try {
+        let suscribtion_list = await api_functions.getSubscriptionList(user);
+        res.status(200).send(suscribtion_list);
+    } catch (error) {
+        console.log('error' + error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+});
+
+router.get('/api/get_subscribers_list', async (req, res) => {
+    let user = {
+        email: req.query.email
+    }
+    try {
+        let suscribtion_list = await api_functions.getSuscribersList(user);
+        res.status(200).send(suscribtion_list);
+    } catch (error) {
+        console.log('error' + error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+});
 
 module.exports = router
