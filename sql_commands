@@ -56,3 +56,6 @@ AFTER
 
 ALTER TABLE users
 ADD CONSTRAINT email UNIQUE (email);
+
+
+ALTER TABLE `users` CHANGE `timezone` `timezone` FLOAT NOT NULL;
