@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> NEW REGISTERATION </title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+
+<body>
+	<div class="registerbox">
+		<img src="icon.png" class="icon">
+		<h1 text-align="center"> REGISTER </h1>
+		<form>
+			<p> Name </p>
+			<input type="text" id="name" placeholder="enter your full name">
+			<p> Email </p>
+			<input type="text" id="email" placeholder="enter your email address">
+			<p> Password </p>
+			<input type="password" id="password" placeholder="enter password">
+			<p> Time_Zone </p>
+			<input type="text" id="time_zone" placeholder="enter your timezone"><br>
+			<input type="submit" value="register" onclick=register()>
+		</form>
+	</div>
+	<script type="text/javascript">
+		function register() {
+			var user = {};
+			user.name = document.getElementById("name").value;
+			user.email = document.getElementById("email").value;
+			user.password = document.getElementById("password").value;
+			user.timezone = document.getElementById("time_zone").value;
+			var url = 'http://localhost:3001/api/register_user'
+			fetch(url, {
+				method: 'post',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(user)
+			})
+				.then((res) => {
+					console.log(res.json);
+					if (res.status != 200)
+						alert('Registeration Failed');
+					else
+						alert('Sucessfully Registered');
+				}).catch(err => {
+					console.log(JSON.stringify(err));
+				});
+		}
+	</script>
+</body>
+</head>
+
+</html>

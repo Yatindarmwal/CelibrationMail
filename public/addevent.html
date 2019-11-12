@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>add event </title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<body>
+<div class="addeventpopup">
+<div class="addeventpopupcontent">
+<img src="iconedit.png" class="editicon" alt="user">
+<img src="closeicon.jpg" class="closeicon">
+<div class="ev-namedate">
+<input class="popupinput" type="text" name="" placeholder="enter event name">
+<input class="popupinput" type ="text" name ="" placeholder="enter event date">
+<button class="btn">ADD</button>
+<div>
+</div>
+</div>
+<script>
+document.querySelector(".closeicon").addEventListener("click",function(){
+document.querySelector(".addeventpopup").style.display="none";
+})
+</script>
+
+</body>
+
+</head>
+</html>

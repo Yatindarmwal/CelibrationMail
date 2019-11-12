@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> User details </title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+<body>
+	<div class="infobox">
+		<form>
+			<div class="namemail">
+
+				<span>
+					<label style="margin: 0; display: inline; ">Name:</label>
+					<input type="text" name="name">
+					<button>Update</button>
+				</span>
+				<span>
+					<label style="margin: 0; display: inline;">Email:</label>
+					<input type="text" name="email">
+					<button>Update</button>
+				</span>
+
+			</div>
+
+
+			<div class="eventsubscribers">
+				<div>
+					<div class="addbuttons">
+						<label style="margin: 0;">Events list </label>
+						<button type="button" class="btn" id="bt1" style="margin: right;  display: inline;">Add
+							event</button>
+
+					</div>
+
+					<div class="eventlist">
+						list of events here.
+					</div>
+				</div>
+
+				<div>
+					<div class="addbuttons">
+						<p style="margin: 0;">Subscribers </p>
+
+					</div>
+					<div class="subscriberslist">
+						subscribers here
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="addbuttons">
+				<p style="margin: 0;">Subscription list </p>
+				<button class="btn" type="button" id="bt2" style="margin: 0; display: inline;">Add people</button>
+			</div>
+
+
+			<div class="subscriptionlist">
+				subscribed people here
+			</div>
+
+
+			<div class="addbuttons">
+				<p style="margin: 0;">Black list </p>
+				<button class="btn" type="button" id="bt3" style="margin: 0; display: inline;">Add people</button>
+			</div>
+
+			<div class="blacklist">
+				blocked people here
+			</div>
+
+		</form>
+
+	</div>
+
+	<div class="addeventpopup">
+		<div class="addeventpopupcontent">
+			<img src="iconedit.png" class="editicon" alt="user" />
+			<img src="closeicon.jpg" class="closeicon" />
+			<div class="ev-namedate">
+				<input class="popupinput" type="text" name="" placeholder="enter event name">
+				<input class="popupinput" type="text" name="" placeholder="enter event date">
+				<button class="btn">ADD</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="addpeoplepopup">
+		<div class="addpeoplepopupcontent">
+			<img src="iconedit.png" class="editicon" alt="user">
+			<img src="closeicon.jpg" class="closeicon" id="close2">
+			<div class="mailadd">
+				<input class="popupinput" type="text" name="" placeholder="enter email to subscribe">
+				<button class="btn">ADD</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="blockpeoplepopup">
+		<div class="blockpeoplepopupcontent">
+			<img src="iconedit.png" class="editicon" alt="user">
+			<img src="closeicon.jpg" class="closeicon" id="close3">
+			<div class="mailadd">
+				<input class="popupinput" type="text" name="" placeholder="enter email to block">
+				<button class="btn">ADD</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById("bt1").addEventListener("click", function () {
+			document.querySelector(".addeventpopup").style.display = "flex";
+		})
+
+		document.getElementById("bt2").addEventListener("click", function () {
+			document.querySelector(".addpeoplepopup").style.display = "flex";
+		})
+
+		document.getElementById("bt3").addEventListener("click", function () {
+			document.querySelector(".blockpeoplepopup").style.display = "flex";
+		})
+
+		document.querySelector(".closeicon").addEventListener("click", function () {
+
+			document.querySelector(".addeventpopup").style.display = "none";
+
+		})
+
+		document.getElementById("close2").addEventListener("click", function () {
+			document.querySelector(".addpeoplepopup").style.display = "none";
+		})
+
+		document.getElementById("close3").addEventListener("click", function () {
+			document.querySelector(".blockpeoplepopup").style.display = "none";
+		})
+	</script>
+
+</body>
+</head>
+
+</html>

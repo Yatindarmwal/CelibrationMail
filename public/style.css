@@ -1,0 +1,259 @@
+body 
+{
+	margin : 0;
+	padding : 0;
+	font-family: sans-serif;
+	
+	
+}
+.loginbox {
+	width: 320px;
+	height: 440px;
+	background: #000;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 70px 30px;
+}
+
+.icon{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	position: absolute;
+	top: -50px;
+	left: calc(50% - 50px);
+}
+ h1{
+	 margin:0;
+	 padding: 0 0 20px;
+	 text-align: center;
+	 font-size: 22px;
+	 
+ }
+ 
+ .loginbox p {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+ }
+ .loginbox input {
+	 width:100%;
+	 margin-bottom: 20px;
+	 
+ }
+ .loginbox input[type = "text"], input[type ="password"]
+ {
+	 border:none;
+	 border-bottom : 1px solid #fff;
+	 background: transparent;
+	 outline: none;
+	 height:40px;
+	 color:#fff;
+	 font-size: 16px;
+ }
+ 
+ .loginbox input[type = "submit"]
+ {
+	 border:"none";
+	 outline:"none";
+	 height:40px;
+	 background: #fb2525;
+	 color:#fff;
+	 font-size: 18px;
+	 border-radius: 20px;
+ }
+ 
+ .loginbox input[type = "submit"]:hover
+ {
+	 cursor: pointer;
+	 background: #ffc107;
+	 color: #000;
+	 
+	 
+ }
+ .loginbox a{
+ 
+	text-decoration: none;
+	font-size: 12px;
+	line-height:20px;
+	color:darkgrey;
+ }
+ 
+ .loginbox a:hover {
+	 color: #ffc107;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .registerbox {
+	width: 320px;
+	height: 450px;
+	background: #000;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 70px 30px;
+}
+ 
+ 
+ .registerbox input[type = "text"], input[type ="password"], input[type = "datetime"]
+ {
+	 border:none;
+	 border-bottom : 1px solid #fff;
+	 background: transparent;
+	 outline: none;
+	 height:40px;
+	 color:#fff;
+	 font-size: 16px;
+ }
+ .registerbox p {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+ }
+ 
+ .registerbox input {
+	 width:100%;
+	 margin-bottom: 0px;
+	 
+ }
+ 
+ .registerbox input[type = "submit"]
+ {
+	 border:"none";
+	 outline:"none";
+	 height:40px;
+	 background: #fb2525;
+	 color:#fff;
+	 font-size: 18px;
+	 border-radius: 40px;
+ }
+ 
+ .registerbox input[type = "submit"]:hover
+ {
+	 cursor: pointer;
+	 background: #ffc107;
+	 color: #000;
+	 
+	 
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .infobox {
+	width: 90%;
+	height: 100%;
+	background: #484343 ;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 70px 30px;
+	font-family: cursive;
+    font-size: large;
+} 
+ .subscriptionlist,.blacklist,.eventlist,.subscriberslist{
+	height:120px;
+	width:420px;
+	border:1px solid #ccc;
+	font:16px/26px Georgia, Garamond, Serif;
+	overflow:auto;
+	background-color: #1f1f05;
+}
+ .addbuttons{
+	 width: 420px;
+    display: flex;
+    justify-content: space-between;
+	margin-top:20px;
+	
+ 
+ 
+ }
+ .namemail,.eventsubscribers,.subscribersside{
+	 display: flex;
+    justify-content: space-between;
+	
+	 
+ }
+ 
+.namemail{
+    font-family: cursive;
+	margin-top:20px;
+}
+.btn{
+	border-radius: 5px;
+	background-color: yellowgreen;
+}
+
+
+.addeventpopup,.addpeoplepopup,.blockpeoplepopup{
+	background:rgba(0,0,0,0.6);
+	width: 100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	display:none;
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	
+}
+
+.addeventpopupcontent,.addpeoplepopupcontent,.blockpeoplepopupcontent{
+	height:250px;
+	width:500px;
+	background:#fff;
+	padding:20px;
+	border-radius:5px;
+	position:relative;
+	
+}
+.editicon{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	position: absolute;
+	top: -4px;
+	right: calc(50% - 40px);
+}
+.popupinput{
+	display:block;
+	margin:20px auto;
+    border: 1px solid gray;
+    padding: 8px;
+	width:50%;
+}
+.ev-namedate,.mailadd{
+	margin-top: 80px;
+    
+}
+.closeicon{
+	position:absolute;
+	top:-10px;
+	background:#fff;
+	border-radius:50%;
+	cursor:pointer;
+	height:20px;
+	width:20px;
+	right:-15px;
+}

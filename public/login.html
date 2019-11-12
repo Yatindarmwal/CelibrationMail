@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+     <title> Automated Mailing </title>
+     <link rel="stylesheet" type="text/css" href="style.css">
+
+
+
+<body>
+     <div class="loginbox">
+
+          <img src="icon.png" class="icon">
+          <h1 text-align="center"> WELCOME </h1>
+          <h1 text-align="center">LOGIN HERE </h1>
+          <form>
+               <p>Email</p>
+               <input type="text" id="email" placeholder="Enter Email">
+               <p> Password </p>
+               <input type="password" id="password" placeholder="Enter Password">
+               <input type="submit" onclick=login()><br>
+               <a href="#"> Lost your password </a> <br>
+               <a href="Register.html"> Don't have an account? </a>
+          </form>
+
+     </div>
+     <script type="text/javascript">
+          function login() {
+               var user = {};
+               user.email = document.getElementById("email").value;
+               user.password = document.getElementById("password").value;
+               var url = 'http://localhost:3001/api/login'
+               fetch(url, {
+                    method: 'post',
+                    headers: {
+                         'Accept': 'application/json, text/plain, */*',
+                         'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+               })
+                    .then((res) => {
+                         console.log(res.json);
+                         if (res.status != 200) {
+                              alert('Authorization Failed');
+                         }
+                         else {
+                              console.log("hello");
+                              // alert('Login Sucessfull');
+                              localStorage.setItem('email', user.email);
+                              document.location.href = '/dashboard';
+                         }
+                    }).catch(err => {
+                         console.log(JSON.stringify(err));
+                    });
+          }
+     </script>
+
+</body>
+</head>
+
+</html>

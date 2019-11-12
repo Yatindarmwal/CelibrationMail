@@ -3,33 +3,23 @@
 const express = require('express');
 const router = express.Router();
 const api_functions = require('../services/api_functions');
-
 router.get('/api', function (req, res) {
     res.status(200).send('celibration mail api');
 });
 
 router.post('/api/register_user', async (req, res) => {
-    let user = {
-        name: req.query.name,
-        email: req.query.email,
-        timezone: req.query.timezone,
-        password: req.query.password
-    }
+    let user = req.body;
     try {
         await api_functions.addUser(user);
         res.status(200).send('Congrats Account created please login');
     } catch (error) {
         console.log('error' + error);
-        res.status(400).send('Failed' + error);
-        return;
+        res.status(400).json(error);
     }
 });
 
-router.get('/api/login', async (req, res) => {
-    let user = {
-        email: req.query.email,
-        password: req.query.password
-    }
+router.post('/api/login', async (req, res) => {
+    let user = req.body;
     try {
         let authorized = await api_functions.validate_user(user);
         if (authorized)
