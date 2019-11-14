@@ -141,8 +141,32 @@
 			user.email = localStorage.getItem('email');
 			var email_textbox = document.getElementById('email');
 			email_textbox.text = user.email;
-		}
+			getEvents(user.email);
 
+		}
+		function getEvents(email) {
+			let url = `http://localhost:3001/api/get_event_list?email=${email}`;
+			fetch(url, {
+				method: 'get',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				}
+			}).then((res) => {
+				res.json().then(data => {
+					console.log(data);
+				});
+				// console.log(JSON.stringify(res));
+				if (res.status != 200) {
+					console.log('get Event Failed');
+				}
+				else {
+					console.log('get event Sucessfull');
+				}
+			}).catch(err => {
+				console.log(JSON.stringify(err));
+			});
+		}
 	</script>
 
 </body>
