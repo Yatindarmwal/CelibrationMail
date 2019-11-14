@@ -5,7 +5,7 @@
 	<title> User details </title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-<body>
+<body onload=populateValues()>
 	<div class="infobox">
 		<form>
 			<div class="namemail">
@@ -17,7 +17,7 @@
 				</span>
 				<span>
 					<label style="margin: 0; display: inline;">Email:</label>
-					<input type="text" name="email">
+					<input type="text" id="email">
 					<button>Update</button>
 				</span>
 
@@ -135,6 +135,14 @@
 		document.getElementById("close3").addEventListener("click", function () {
 			document.querySelector(".blockpeoplepopup").style.display = "none";
 		})
+
+		function populateValues() {
+			var user = {};
+			user.email = localStorage.getItem('email');
+			var email_textbox = document.getElementById('email');
+			email_textbox.text = user.email;
+		}
+
 	</script>
 
 </body>
