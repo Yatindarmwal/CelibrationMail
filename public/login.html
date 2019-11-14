@@ -13,7 +13,7 @@
           <img src="icon.png" class="icon">
           <h1 text-align="center"> WELCOME </h1>
           <h1 text-align="center">LOGIN HERE </h1>
-          <form>
+          <div>
                <p>Email</p>
                <input type="text" id="email" placeholder="Enter Email">
                <p> Password </p>
@@ -21,7 +21,7 @@
                <input type="submit" onclick=login()><br>
                <a href="#"> Lost your password </a> <br>
                <a href="Register.html"> Don't have an account? </a>
-          </form>
+          </div>
 
      </div>
      <script type="text/javascript">
@@ -41,11 +41,11 @@
                     .then((res) => {
                          console.log(res.json);
                          if (res.status != 200) {
+                              console.log('Authorization Failed');
                               alert('Authorization Failed');
                          }
                          else {
-                              console.log("hello");
-                              // alert('Login Sucessfull');
+                              console.log('Login Sucessfull');
                               localStorage.setItem('email', user.email);
                               document.location.href = '/dashboard';
                          }

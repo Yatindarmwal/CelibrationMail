@@ -10,7 +10,7 @@
 	<div class="registerbox">
 		<img src="icon.png" class="icon">
 		<h1 text-align="center"> REGISTER </h1>
-		<form>
+		<div>
 			<p> Name </p>
 			<input type="text" id="name" placeholder="enter your full name">
 			<p> Email </p>
@@ -20,7 +20,7 @@
 			<p> Time_Zone </p>
 			<input type="text" id="time_zone" placeholder="enter your timezone"><br>
 			<input type="submit" value="register" onclick=register()>
-		</form>
+		</div>
 	</div>
 	<script type="text/javascript">
 		function register() {
@@ -40,10 +40,14 @@
 			})
 				.then((res) => {
 					console.log(res.json);
-					if (res.status != 200)
+					if (res.status != 200) {
+						console.log('Registeration Failed');
 						alert('Registeration Failed');
-					else
+					}
+					else {
+						console.log('Sucessfully Registered');
 						alert('Sucessfully Registered');
+					}
 				}).catch(err => {
 					console.log(JSON.stringify(err));
 				});
