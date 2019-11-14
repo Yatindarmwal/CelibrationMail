@@ -20,22 +20,47 @@ router.post('/api/register_user', async (req, res) => {
 
 router.post('/api/login', async (req, res) => {
     let user = req.body;
+    console.log(user); 
     try {
         let authorized = await api_functions.validate_user(user);
-        if (authorized)
+       // console.log(authorized,'FGGFGF');
+        if (authorized) {
+           // console.log(authorized,'UYHF');
             res.status(200).send('Welcome');
-        else
+        }
+        else{
+            console.log(authorized,'WERT');
             res.status(401).send('Un Authorized');
+        }
+            
     } catch (error) {
         console.log('error' + error);
+        console.log('api routes failed');
         res.status(400).send('Failed' + error);
         return;
     }
+});
+router.get('/api/dashboardInfo', async (req, res) => {
+    console.log("inside api routes");
+    try{
+        console.log("inside api");
+    let mail = localStorage.getItem('email');
+    console.log("inside api");
+    console.log(mail);
+    res.status(200).send(mail);
+    return;
+    } catch(error){
+        console.log('error'+error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+    
 });
 
 router.get('/api/get_event_list', async (req, res) => {
     let user = {
         email: req.query.email
+      
     }
     try {
         let event_list = await api_functions.getEventList(user);
@@ -89,4 +114,4 @@ router.get('/api/get_subscribers_list', async (req, res) => {
     }
 });
 
-module.exports = router
+module.exports = router;

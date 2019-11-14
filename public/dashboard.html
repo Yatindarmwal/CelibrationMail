@@ -5,7 +5,7 @@
 	<title> User details </title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-<body>
+<body onload = "getDataFromDb()">
 	<div class="infobox">
 		<form>
 			<div class="namemail">
@@ -110,6 +110,23 @@
 	</div>
 
 	<script>
+
+		function getDataFromDb()
+		{
+			console.log("data");
+			let mail = localStorage.getItem('email');
+			console.log(mail);
+			fetch('http://localhost:3001/api/dashboardInfo',mail)
+			.then((res)=>{
+				console.log("response ");
+				
+				console.log(res.json);
+
+			})
+			.catch((err) =>{
+				console.log(err);
+			})
+		}
 		document.getElementById("bt1").addEventListener("click", function () {
 			document.querySelector(".addeventpopup").style.display = "flex";
 		})

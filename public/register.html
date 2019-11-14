@@ -39,6 +39,8 @@
 				body: JSON.stringify(user)
 			})
 				.then((res) => {
+					console.log("response is");
+					console.log(res);
 					console.log(res.json);
 					if (res.status != 200)
 						alert('Registeration Failed');

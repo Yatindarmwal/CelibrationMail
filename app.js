@@ -5,7 +5,7 @@ const db = require('./services/database');
 const celibration_mail_cron = require('./background_process/celibration_mail_cron');
 const app = express();
 var bodyParser = require('body-parser');
-app.use('/', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/public')); 
 app.use(bodyParser.json());
 const port = 3001;
 app.use(require('./routes/website_routes'));

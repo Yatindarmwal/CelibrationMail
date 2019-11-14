@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'qwertyuiop',
+    password: '220682',
     database: 'celibration_mail'
 });
 

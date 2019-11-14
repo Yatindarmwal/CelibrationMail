@@ -18,7 +18,7 @@
                <input type="text" id="email" placeholder="Enter Email">
                <p> Password </p>
                <input type="password" id="password" placeholder="Enter Password">
-               <input type="submit" onclick=login()><br>
+               <input type="Submit" value='Submit' onclick=login()><br>
                <a href="#"> Lost your password </a> <br>
                <a href="Register.html"> Don't have an account? </a>
           </form>
@@ -39,15 +39,20 @@
                     body: JSON.stringify(user)
                })
                     .then((res) => {
+                         console.log("response reached",res);
                          console.log(res.json);
                          if (res.status != 200) {
                               alert('Authorization Failed');
                          }
                          else {
                               console.log("hello");
-                              // alert('Login Sucessfull');
+                              //console.log(user.email);
+                              
                               localStorage.setItem('email', user.email);
-                              document.location.href = '/dashboard';
+                              console.log("localstorage items are");
+                              console.log(localStorage.getItem('email'));
+                              alert('Login Sucessfull');
+                              document.location.href = 'http://localhost:3001/dashboard.html';
                          }
                     }).catch(err => {
                          console.log(JSON.stringify(err));

@@ -8,15 +8,15 @@ router.get('/', function (req, res) {
 });
 
 router.get('/register', (req, res) => {
-    res.sendFile('/Users/yatindarmwal/Documents/Celibration_mail/public/register.html');
+    res.sendFile('C:\Users\91875\Desktop\neww\CelibrationMail\public\register.html');
 });
 
 router.get('/login', (req, res) => {
-    res.sendFile('/Users/yatindarmwal/Documents/Celibration_mail/public/login.html');
+    res.sendFile('C:\Users\91875\Desktop\neww\CelibrationMail\public\login.html');
 });
 
 router.get('/dashboard', (req, res) => {
-    res.sendFile('/Users/yatindarmwal/Documents/Celibration_mail/public/dashboard.html');
+    res.sendFile('C:\Users\91875\Desktop\neww\CelibrationMail\public\dashboard.html');
 });
 
 
