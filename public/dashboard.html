@@ -116,7 +116,8 @@
 			console.log("data");
 			let mail = localStorage.getItem('email');
 			console.log(mail);
-			fetch('http://localhost:3001/api/dashboardInfo',mail)
+					)
+			fetch('http://localhost:3001/api/dashboardInfo')
 			.then((res)=>{
 				console.log("response ");
 				
@@ -127,6 +128,7 @@
 				console.log(err);
 			})
 		}
+		
 		document.getElementById("bt1").addEventListener("click", function () {
 			document.querySelector(".addeventpopup").style.display = "flex";
 		})
