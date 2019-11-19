@@ -28,12 +28,12 @@ dummy_db.push({    //fake entry in DB
     last_wished_on: null
 });
 
-setInterval(function () { process_1(); }, 60000 * 60);    // to get data from db and populate email array
+setInterval(function () { processCelebrationMail(); }, 60000 * 60);    // to get data from db and populate email array
 
-setInterval(function () { process_2(); }, 60000 * 60);    // to send mail
+setInterval(function () { sendMailFromQueue(); }, 60000 * 60);    // to send mail
 
 
-function process_1() {
+function processCelebrationMail() {
     getDataFromDb().then((user_data) => {
         for (let i = 0; i < user_data.length; i++) {
             let special_user = user_data[i];
@@ -49,10 +49,11 @@ function process_1() {
                 }
             }
         }
+        sendMailFromQueue();
     });
 }
 
-function process_2() {
+function sendMailFromQueue() {
     mails_to_send = mails_to_send.filter((user) => {
         return user;
     });
@@ -86,7 +87,7 @@ function sendMail(user) {    // mimic node mailer
         else
             content = `Happy ${user.special_moment}`;
         //use node mailer to send mail
-        console.log(`mail sent to ${user.email} wit content ${content}`);
+        console.log(`mail sent to ${user.email} with content ${content}`);
         resolve('mail Sent');
     });
 }
@@ -109,13 +110,6 @@ function qualifiedyForMail(user, special_user) {
     return false;
 }
 
-
-function getDataFromDb() {     //fake function to get gata from SQL
-    return new Promise((resolve, reject) => {
-        resolve(dummy_db);
-    });
-}
-
 function isSpecialMomentValid(date) {
     let current_time = new Date();
     let user_date = new Date(date);
@@ -124,5 +118,25 @@ function isSpecialMomentValid(date) {
     }
     return false;
 }
+
+
+function getDataFromDb() {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT
+        users.name,
+        users.email,
+        users.timezone,
+        events.title as special_moment,
+        events.recuring_date date,
+        events.last_wished_on
+      FROM
+        users
+        LEFT JOIN events ON users.id = events.user_id`, function (err, result, fields) {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
+
 
 // isSpecialMomentValid(dummy_db[0]);
