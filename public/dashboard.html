@@ -9,45 +9,35 @@
 	<div class="infobox">
 		<form>
 			<div class="namemail">
-
-				<span>
+			    <span>
 					<label style="margin: 0; display: inline; ">Name:</label>
-					<input type="text" name="name">
+					<input type="text" id="dashboardName" name="name">
 					<button>Update</button>
 				</span>
 				<span>
 					<label style="margin: 0; display: inline;">Email:</label>
-					<input type="text" name="email">
+					<input type="text" id="dashboardEmail">
 					<button>Update</button>
 				</span>
-
 			</div>
-
-
 			<div class="eventsubscribers">
 				<div>
 					<div class="addbuttons">
 						<label style="margin: 0;">Events list </label>
-						<button type="button" class="btn" id="bt1" style="margin: right;  display: inline;">Add
-							event</button>
-
+						<button type="button" class="btn" id="bt1" style="margin: right;  display: inline;">Addevent</button>
 					</div>
-
-					<div class="eventlist">
-						list of events here.
+					<div class="eventlist" id = "eventsList">
+						 list of events here.
 					</div>
 				</div>
-
 				<div>
 					<div class="addbuttons">
 						<p style="margin: 0;">Subscribers </p>
-
 					</div>
-					<div class="subscriberslist">
+					<div class="subscriberslist" id = "subscribersList">
 						subscribers here
 					</div>
 				</div>
-
 			</div>
 
 
@@ -57,7 +47,7 @@
 			</div>
 
 
-			<div class="subscriptionlist">
+			<div class="subscriptionlist" id ="subscriptionlist">
 				subscribed people here
 			</div>
 
@@ -67,22 +57,21 @@
 				<button class="btn" type="button" id="bt3" style="margin: 0; display: inline;">Add people</button>
 			</div>
 
-			<div class="blacklist">
+			<div class="blacklist" id = "blackList">
 				blocked people here
 			</div>
 
 		</form>
-
 	</div>
-
+	
 	<div class="addeventpopup">
 		<div class="addeventpopupcontent">
 			<img src="iconedit.png" class="editicon" alt="user" />
 			<img src="closeicon.jpg" class="closeicon" />
 			<div class="ev-namedate">
-				<input class="popupinput" type="text" name="" placeholder="enter event name">
-				<input class="popupinput" type="text" name="" placeholder="enter event date">
-				<button class="btn">ADD</button>
+				<input class="popupinput" type="text" id="addEventInput" name="" placeholder="enter event name">
+				<input class="popupinput" type="text" id = "addEventDateInput"name="" placeholder="enter event date">
+				<button class="btn" id="addEventPopupBtn">ADD</button>
 			</div>
 		</div>
 	</div>
@@ -92,8 +81,8 @@
 			<img src="iconedit.png" class="editicon" alt="user">
 			<img src="closeicon.jpg" class="closeicon" id="close2">
 			<div class="mailadd">
-				<input class="popupinput" type="text" name="" placeholder="enter email to subscribe">
-				<button class="btn">ADD</button>
+				<input class="popupinput" id="addPeopleInput" type="text" name="" placeholder="enter email to subscribe">
+				<button class="btn" id="addPeopleBtn">ADD</button>
 			</div>
 		</div>
 	</div>
@@ -103,23 +92,54 @@
 			<img src="iconedit.png" class="editicon" alt="user">
 			<img src="closeicon.jpg" class="closeicon" id="close3">
 			<div class="mailadd">
-				<input class="popupinput" type="text" name="" placeholder="enter email to block">
-				<button class="btn">ADD</button>
+				<input class="popupinput" id="blockPeopleInput" type="text" name="" placeholder="enter email to block">
+				<button class="btn" id="blockPeopleBtn">ADD</button>
 			</div>
 		</div>
 	</div>
 
-	<script>
+<script>
 
-function populateValues() {
+	//CALL FUNCTIONS TO POPULATE DASHBOARD WITH VALUES
+	function populateValues() {
 			var user = {};
 			user.email = localStorage.getItem('email');
-			var email_textbox = document.getElementById('email');
-			email_textbox.text = user.email;
+			name_mailDisplay(user.email);
 			getEvents(user.email);
+			getSubscribers(user.email);
+			getSubscriptionList(user.email);
+			getBlackList(user.email);
 
 		}
-		function getEvents(email) {
+
+	//FUNCTION TO DISPLAY NAME AND EMAIL IN DASHBOARD
+	function name_mailDisplay(email) {
+			document.getElementById('dashboardEmail').value = email;
+			let url = `http://localhost:3001/api/getName?email=${email}`;
+			fetch(url, {
+				method: 'get',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				}
+			}).then((res)=>
+			{
+				res.json().then(data => {
+					
+					console.log("data for name is");
+					console.log(data);			
+					document.getElementById('dashboardName').value = data;
+            })
+			}).catch(err => {
+				console.log("dashbrd err");
+				console.log(JSON.stringify(err));
+			});
+		}
+		
+		
+	
+	//FUNCTION TO GET EVENT LIST FROM DB AND DISPLAY ON DASHBOARD
+	function getEvents(email) {
 			let url = `http://localhost:3001/api/get_event_list?email=${email}`;
 			fetch(url, {
 				method: 'get',
@@ -129,7 +149,15 @@ function populateValues() {
 				}
 			}).then((res) => {
 				res.json().then(data => {
-					console.log(data);
+					let ul = document.createElement('ul');
+					let sublist = document.getElementById('eventsList');
+					data.forEach( dataobj =>{
+
+						let li = document.createElement('li');
+						li.textContent = dataobj.title;
+						ul.appendChild(li);
+					})
+					sublist.appendChild(ul);
 				});
 				// console.log(JSON.stringify(res));
 				if (res.status != 200) {
@@ -143,18 +171,145 @@ function populateValues() {
 				console.log(JSON.stringify(err));
 			});
 		}
-		
+
+
+	//TO RETRIEVE AND DISPLAY SUBSCRIBER LIST
+	function getSubscribers(email) {
+
+			let url = `http://localhost:3001/api/get_subscribers_list?email=${email}`;
+			fetch(url, {
+				method: 'get',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				}
+			}).then((res) => {
+				res.json().then(data => {
+					let ul = document.createElement('ul');
+					let sublist = document.getElementById('subscribersList');
+					data.forEach( dataobj =>{
+
+						let li = document.createElement('li');
+						li.textContent = dataobj.email;
+						ul.appendChild(li);
+					})
+					sublist.appendChild(ul);
+				});
+				// console.log(JSON.stringify(res));
+				if (res.status != 200) {
+					console.log('get Event Failed');
+				}
+				else {
+					console.log('subscribers are');
+					console.log(JSON.stringify(res));
+
+				}
+			}).catch(err => {
+				console.log(JSON.stringify(err));
+			});
+		}
+
+
+
+
+
+
+	//TO GET SUBSCRIPTION LIST OF USER
+	function getSubscriptionList(email) {
+			let url = `http://localhost:3001/api/get_subscription_list?email=${email}`;
+			fetch(url, {
+				method: 'get',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				}
+			}).then((res) => {
+				res.json().then(data => {
+					
+					let sublist = document.getElementById('subscriptionlist');
+					let ul = document.createElement('ul');
+					data.forEach( dataobj => {
+						
+						let li = document.createElement('li');
+						li.textContent = dataobj.suscribed_email
+						ul.appendChild(li);
+					});
+					sublist.appendChild(ul);
+				});
+				// console.log(JSON.stringify(res));
+				if (res.status != 200) {
+					console.log('get Event Failed');
+				}
+				else {
+					console.log('subscription list is');
+					//let val = JSON.stringify(res);
+					//console.log(JSON.stringify(res));
+					//document.getElementById('subscriptionlist').innerHTML = "abc";
+					
+
+				}
+			}).catch(err => {
+				console.log(JSON.stringify(err));
+			});
+		}
+
+
+
+	//TO GET BLACKLIST
+	function getBlackList(email) {
+			let url = `http://localhost:3001/api/get_black_list?email=${email}`;
+			fetch(url, {
+				method: 'get',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				}
+			}).then((res) => {
+				res.json().then(data => {
+					let ul = document.createElement('ul');
+					let sublist = document.getElementById('blackList');
+					data.forEach(dataobj =>
+					{
+					let li = document.createElement('li');
+					li.textContent = dataobj.blacklisted_email;
+					ul.appendChild(li);
+					
+					})
+					sublist.appendChild(ul);
+
+				});
+				// console.log(JSON.stringify(res));
+				if (res.status != 200) {
+					console.log('get Event Failed');
+				}
+				else {
+					console.log('black list is');
+				//	console.log(JSON.stringify(res));
+
+				}
+			}).catch(err => {
+				console.log(JSON.stringify(err));
+			});
+		}
+
+
+		// 	bt1 indicates "add event" button in dashboard
 		document.getElementById("bt1").addEventListener("click", function () {
+			
 			document.querySelector(".addeventpopup").style.display = "flex";
 		})
 
+		// bt2 indicates "add people" button for subscription list
 		document.getElementById("bt2").addEventListener("click", function () {
 			document.querySelector(".addpeoplepopup").style.display = "flex";
 		})
 
+		// bt3 indicates "add people" button for black list
 		document.getElementById("bt3").addEventListener("click", function () {
 			document.querySelector(".blockpeoplepopup").style.display = "flex";
 		})
+
+		//close icon for 3 popup modals
 
 		document.querySelector(".closeicon").addEventListener("click", function () {
 
@@ -169,6 +324,97 @@ function populateValues() {
 		document.getElementById("close3").addEventListener("click", function () {
 			document.querySelector(".blockpeoplepopup").style.display = "none";
 		})
+
+
+
+
+		//	add people to subscribe after entering his/her email address
+
+		document.getElementById("addPeopleBtn").addEventListener("click", function () {
+		
+			let user ={};
+			user.email = document.getElementById("addPeopleInput").value;
+			user.login_email = localStorage.getItem('email');
+			
+			let url = `http://localhost:3001/api/dashboardSubscribePeople`;
+					fetch(url, {
+							method: 'post',
+							headers: {
+							'Accept': 'application/json, text/plain, */*',
+							'Content-Type': 'application/json'
+					},
+							body: JSON.stringify(user)
+					}).then((res) => {
+							console.log("response reached",res);
+							console.log(res.json);
+							document.querySelector(".addpeoplepopup").style.display = "none";
+					})
+					.catch(err => {
+							console.log(JSON.stringify(err));
+			  });
+		   });
+
+
+
+		//calls api to add event after entering event name,date to popup
+
+		document.getElementById("addEventPopupBtn").addEventListener("click", function () {
+		let user ={};
+		user.event = document.getElementById("addEventInput").value;
+		user.eventDate = document.getElementById("addEventDateInput").value;
+
+		user.login_email = localStorage.getItem('email');
+		
+		console.log("email is",user.login_email);
+		console.log(user);
+		let url = `http://localhost:3001/api/dashboardAddEvent`;
+				fetch(url, {
+						method: 'post',
+						headers: {
+						'Accept': 'application/json, text/plain, */*',
+						'Content-Type': 'application/json'
+				},
+						body: JSON.stringify(user)
+				}).then((res) => {
+						console.log("response reached",res);
+						console.log(res.json);
+						document.querySelector(".addeventpopup").style.display = "none";
+
+				})
+				.catch(err => {
+						console.log(JSON.stringify(err));
+		  });
+	   });
+
+			
+
+	   //calls api to enter people to blacklist
+	   document.getElementById("blockPeopleBtn").addEventListener("click", function () {
+			let user ={};
+			user.email = document.getElementById("blockPeopleInput").value;
+			user.login_email = localStorage.getItem('email'); 			
+			
+			let url = `http://localhost:3001/api/dashboardBlockPeople`;
+					fetch(url, {
+							method: 'post',
+							headers: {
+							'Accept': 'application/json, text/plain, */*',
+							'Content-Type': 'application/json'
+					},
+							body: JSON.stringify(user)
+					}).then((res) => {
+							console.log("response reached",res);
+							console.log(res.json);
+							document.querySelector(".blockpeoplepopup").style.display = "none";
+
+					})
+					.catch(err => {
+							console.log(JSON.stringify(err));
+			  });
+		   });
+	
+		
+
 	</script>
 
 </body>
