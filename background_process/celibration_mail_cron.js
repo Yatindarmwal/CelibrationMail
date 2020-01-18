@@ -1,7 +1,19 @@
 'use strict';
 
 const db = require('../services/database');
+const nodemailer = require('nodemailer');
+
+const SENDER_EMAIL = 'celibrationmail99@gmail.com';
+const EMAIL_PASS = 'intelpentium+';
+
 var mails_to_send = [];  //mail queue
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: SENDER_EMAIL,
+        pass: EMAIL_PASS
+    }
+});
 
 setInterval(function () { processCelebrationMail(); }, 60000 * 60);    // runs ever hour 
 
@@ -31,20 +43,25 @@ async function processCelebrationMail() {
 }
 
 async function sendMailFromQueue() {
-    mails_to_send = mails_to_send.filter((user) => {
-        return user;
-    });
-    let current_hour = new Date().getHours() + 1;
-    for (let i = 0; i < mails_to_send.length; i++) {
-        let user = mails_to_send[i];
-        if (user) {
-            if (user.time_to_send_mail = current_hour) {
-                await sendMail(user)
-                if (!user.to_wish)   // this means he was the one who had the special ocation
-                    await updateDb(user.event_id);
-                mails_to_send[i] = null;
+    try {
+        mails_to_send = mails_to_send.filter((user) => {
+            return user;
+        });
+        let current_hour = new Date().getHours() + 1;
+        for (let i = 0; i < mails_to_send.length; i++) {
+            let user = mails_to_send[i];
+            if (user) {
+                if (user.time_to_send_mail = current_hour) {
+                    await sendMail(user)
+                    if (!user.to_wish)   // this means he was the one who had the special ocation
+                        await updateDb(user.event_id);
+                    mails_to_send[i] = null;
+                }
             }
         }
+    } catch (err) {
+        console.log(JSON.stringify(err));
+        throw err
     }
 }
 
@@ -67,9 +84,22 @@ async function sendMail(user) {    // mimic node mailer
                 content = `Its ${user.to_wish}'s ${user.to_wish_ocation}`;
             else
                 content = `Happy ${user.special_moment}`;
-            //use node mailer to send mail
-            console.log(`mail sent to ${user.email} with content ${content}`);
-            resolve('mail Sent');
+            const mailOptions = {
+                from: SENDER_EMAIL, // sender address
+                to: user.email, // list of receivers
+                subject: 'CELIBRATION MAIL', // Subject line
+                html: `<p>${content}</p>`// plain text body
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    reject();
+                }
+                else {
+                    console.log(`mail sent to ${user.email} with content ${content}`);
+                    resolve('mail Sent');
+                }
+            });
         });
     } catch (err) { throw err }
 }

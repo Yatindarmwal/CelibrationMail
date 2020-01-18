@@ -108,7 +108,7 @@ router.get('/api/get_name', async (req, res) => {
 
 router.get('/trigger_mails', async (req, res) => {
     background_process.processCelebrationMail();
-    res.status(200).send('Celibration Mails Triggered' + error);
+    res.status(200).send('Celibration Mails Triggered');
 });
 
 module.exports = router
