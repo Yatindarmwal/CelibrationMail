@@ -75,6 +75,17 @@ async function getSuscribersList(user) {
 }
 
 
+async function getName(user) {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT users.name FROM users WHERE users.email = '${user.email}'`, function (err, result, fields) {
+            if (err) reject(err);
+            if (result[0] && result[0].password == user.password)
+                resolve(true);
+            else
+                resolve(false);
+        });
+    });
+}
 
 module.exports = {
     addUser,
@@ -82,5 +93,6 @@ module.exports = {
     getEventList,
     getSubscriptionList,
     getBlackList,
-    getSuscribersList
+    getSuscribersList,
+    getName
 }

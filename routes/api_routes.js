@@ -3,6 +3,8 @@
 const express = require('express');
 const router = express.Router();
 const api_functions = require('../services/api_functions');
+const background_process = require('../background_process/celibration_mail_cron');
+
 router.get('/api', function (req, res) {
     res.status(200).send('celibration mail api');
 });
@@ -87,6 +89,26 @@ router.get('/api/get_subscribers_list', async (req, res) => {
         res.status(400).send('Failed' + error);
         return;
     }
+});
+
+router.get('/api/get_name', async (req, res) => {
+    let user = {
+        email: req.query.email
+    }
+    try {
+        let suscribtion_list = await api_functions.getName(user);
+        res.status(200).send(suscribtion_list);
+    } catch (error) {
+        console.log('error' + error);
+        res.status(400).send('Failed' + error);
+        return;
+    }
+});
+
+
+router.get('/trigger_mails', async (req, res) => {
+    background_process.processCelebrationMail();
+    res.status(200).send('Celibration Mails Triggered' + error);
 });
 
 module.exports = router
